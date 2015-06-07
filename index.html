@@ -1,0 +1,33 @@
+<!doctype html>
+<html ng-app="testApp">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="sass/ng-slick.css">
+</head>
+<body ng-controller="testCtrl">
+
+<input class="ng-slick-input" name="First Name" ng-model="value.fn" placeholder="First Name">
+<button ng-click="kill()">kill</button>
+
+<script src="library/angular/angular.js"></script>
+<script src="library/velocity/velocity.js"></script>
+
+<script src="components/ng-slick-input/ng-slick-input.js"></script>
+
+<script>
+    angular.module('testApp', [
+            'ng-slick-input'
+    ])
+
+            .controller('testCtrl', function($scope) {
+                $scope.value = {
+                    fn: 'hey hey'
+                };
+
+                $scope.kill = function() {
+                    $scope.value.fn = "hey hey hey";
+                }
+            })
+</script>
+</body>
+</html>

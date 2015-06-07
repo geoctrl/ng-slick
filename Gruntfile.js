@@ -9,7 +9,9 @@ module.exports = function(grunt){
             livereload: {
                 options: {livereload: true},
                 files: [
-                    'components/**/*'
+                    'components/**/*',
+                    'sass/ng-slick.css',
+                    'index.html'
                 ]
             }
         },

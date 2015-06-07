@@ -1,0 +1,41 @@
+.ng-slick-input-container {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.ng-slick-input {
+  position: relative;
+  border: none;
+  border-bottom: solid 2px #e3e3e3;
+  padding: 10px;
+  display: block;
+  width: 100%;
+  font-family: $ns-font-family;
+  font-size: 16px;
+  background-color: transparent;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+
+  &:hover {
+
+  }
+}
+
+.ng-slick-input-placeholder {
+  font-size: 14px;
+  color: #a3a3a3;
+  font-family: $ns-font-family;
+  position: absolute;
+  height: 40px;
+  line-height: 40px;
+  top: 0;
+  left: 10px;
+}
