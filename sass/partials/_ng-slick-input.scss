@@ -1,6 +1,7 @@
 .ng-slick-input-container {
   position: relative;
   margin-bottom: 30px;
+  clear: both;
 }
 
 .ng-slick-input {
@@ -12,6 +13,7 @@
   width: 100%;
   font-family: $ns-font-family;
   font-size: 16px;
+  z-index: 1;
   background-color: transparent;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -31,11 +33,13 @@
 
 .ng-slick-input-placeholder {
   font-size: 14px;
-  color: #a3a3a3;
+  color: #c3c3c3;
   font-family: $ns-font-family;
   position: absolute;
   height: 40px;
   line-height: 40px;
   top: 0;
   left: 10px;
+  z-index: 0;
+  cursor: default;
 }
