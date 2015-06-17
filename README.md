@@ -1,7 +1,7 @@
-# ng-slick
+# Slick Components
 
-Slick components written natively in Angular
+Slick components written in Vanilla JS
 
 ### Getting Started
 
-*Requires AngularJS `>=1.2.x` and VelocityJS `>=1.2.0` for animations.*
+*To use animations, Slick requires VelocityJS `>=1.2.0`.*
