@@ -1,4 +1,4 @@
-# Slick Components
+# Slick
 
 Slick components written in Vanilla JS
 
