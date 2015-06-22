@@ -18,7 +18,7 @@ module.exports = function(grunt){
                 files: [
                     'components/es6/slick-helpers.js',
                     'components/es6/slick-input.js',
-                    'sass/ng-slick.css',
+                    'sass/slick.css',
                     'index.html'
                 ],
                 tasks: ['concat','babel'],

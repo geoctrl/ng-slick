@@ -14,7 +14,7 @@ class SlickInput {
         this.options = options || {};
         this.defaults = {
             animate: options.animate || true,
-            duration: options.duration || 300
+            duration: options.duration || 800
         };
 
         for (var i=0; i<this.elements.length; i++) {
@@ -23,16 +23,48 @@ class SlickInput {
     }
 
     init(element) {
+
+        var parentNode = element.parentNode;
         var container = document.createElement('div');
-        container.setAttribute('class', 'slick-input-container');
-        document.body.insertBefore(container, element);
+        var placeholder = document.createElement('div');
+
+        container.setAttribute('class', 'slick-component-input-container');
+        placeholder.setAttribute('class', 'slick-component-input-placeholder');
+        element.className = element.className + " slick-component-input";
+        placeholder.innerHTML = element.placeholder;
+
+        parentNode.insertBefore(container, element);
         container.appendChild(element);
+        container.appendChild(placeholder);
+
+        container.addEventListener('click', function() {
+            //console.log('test this out')
+        });
 
         this.elementArray.push({
             'input': element,
             'container': container,
             'placeholder': element.placeholder
         });
+
+        element.removeAttribute('placeholder');
+
+        this.animateIn(this.elementArray[this.elementArray.length-1]);
+    }
+
+    animateIn(elementObject) {
+        elementObject.container.style.opacity = 1;
+
+        Velocity(elementObject.container, {
+            width: 0
+        }, {
+            duration: 0
+        })
+        Velocity(elementObject.container, {
+            width: '100%'
+        }, {
+            duration: this.defaults.duration
+        })
     }
 
     destroy() {

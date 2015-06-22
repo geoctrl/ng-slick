@@ -13,5 +13,8 @@ var slickHelpers = {
             timeout = setTimeout(later, wait);
             if (callNow) func.apply(context, args);
         };
+    },
+    hasClass: function(element, className) {
+        return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
     }
 };
