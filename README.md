@@ -1,6 +1,6 @@
 # Slick
 
-Slick components written in Vanilla JS
+Slick components written in ES6 and transpiled to ES5 with `BabelJS`.
 
 ### Getting Started
 
