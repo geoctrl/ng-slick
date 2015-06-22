@@ -1,4 +1,4 @@
-var ngSlickHelpers = {
+var slickHelpers = {
 
     debounce: function(func, wait, immediate) {
         var timeout;
@@ -14,5 +14,4 @@ var ngSlickHelpers = {
             if (callNow) func.apply(context, args);
         };
     }
-
 };

@@ -5,14 +5,26 @@ module.exports = function(grunt){
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        babel: {
+            dev: {
+                files: {
+                    'components/compiled.js': 'components/compiled.js'
+                }
+            }
+        },
+
         watch: {
             livereload: {
-                options: {livereload: true},
                 files: [
-                    'components/**/*',
+                    'components/es6/slick-helpers.js',
+                    'components/es6/slick-input.js',
                     'sass/ng-slick.css',
                     'index.html'
-                ]
+                ],
+                tasks: ['concat','babel'],
+                options: {
+                    livereload: true
+                }
             }
         },
         connect: {
@@ -29,6 +41,15 @@ module.exports = function(grunt){
                     ]
                 }
             }
+        },
+        concat: {
+            options: {
+                separator: ';\n'
+            },
+            dist: {
+                src: ['components/es6/**/*.js'],
+                dest: 'components/compiled.js'
+            }
         }
 
     });
@@ -37,7 +58,7 @@ module.exports = function(grunt){
 
         grunt.task.run([
             'connect:livereload',
-            'watch'
+            'watch:livereload'
         ]);
     });
 

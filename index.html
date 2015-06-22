@@ -1,56 +1,21 @@
 <!doctype html>
-<html ng-app="testApp">
+<html>
 <head>
     <title></title>
     <link rel="stylesheet" href="sass/ng-slick.css">
 </head>
-<body ng-controller="testCtrl">
+<body>
 
-<div style="width: 600px;">
-    <div style="width: 50%; padding: 20px; float: left; box-sizing: border-box;">
-        <input class="ng-slick-input" value="Tony" placeholder="First Name">
-        <input class="ng-slick-input" placeholder="Last Name">
-    </div>
-    <div style="width: 50%; padding: 20px; float: left; box-sizing: border-box;">
-        <input class="ng-slick-input" ng-model="value.firstName" placeholder="First Name">
-        <input class="ng-slick-input" ng-model="value.lastName" placeholder="Last Name">
-    </div>
-    <div style="width: 300px;">
-        <input class="ng-slick-input" type="text" placeholder="test">
-        <input class="ng-slick-input" type="text" placeholder="test">
-        <input class="ng-slick-input" type="text" placeholder="test">
-        <input class="ng-slick-input" type="text" placeholder="test">
-        <input class="ng-slick-input" type="text" placeholder="test">
-        <input class="ng-slick-input" type="text" placeholder="test">
-        <input class="ng-slick-input" type="text" placeholder="test">
-    </div>
-</div>
+<input class="slick-input" type="text" placeholder="First Name">
+<input class="slick-input" type="text" >
+<input class="slick-input" type="email" placeholder="Email">
 
-<button ng-click="kill()">
-    add
-</button>
-<script src="library/angular/angular.js"></script>
+<input id="slick-input" type="text" placeholder="Name by Id">
+
 <script src="library/velocity/velocity.js"></script>
 
-<script src="components/ng-slick-helpers.js"></script>
-<script src="components/ng-slick-input.js"></script>
+<script src="components/es6/slick-helpers.js"></script>
+<script src="components/es6/slick-input.js"></script>
 
-<script>
-    angular.module('testApp', [
-            'ng-slick-input'
-    ])
-
-            .controller('testCtrl', function($scope) {
-                $scope.value = {
-                    firstName: 'Tony',
-                    lastName: '',
-                    empty: ''
-                };
-
-                $scope.kill = function() {
-                    $scope.value.lastName = "hey hey hey";
-                }
-            })
-</script>
 </body>
 </html>
