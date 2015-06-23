@@ -10,19 +10,18 @@ class SlickInput {
     constructor(target, options) {
         this.target = target;
         this.elements = document.querySelectorAll(target);
-        this.elementArray = [];
         this.options = options || {};
         this.defaults = {
             animate: options.animate || true,
-            duration: options.duration || 800
+            duration: options.duration || 400
         };
 
         for (var i=0; i<this.elements.length; i++) {
-            this.init(this.elements[i]);
+            SlickInput.init(this.elements[i]);
         }
-    }
+    };
 
-    init(element) {
+    static init(element) {
 
         var parentNode = element.parentNode;
         var container = document.createElement('div');
@@ -37,45 +36,67 @@ class SlickInput {
         container.appendChild(element);
         container.appendChild(placeholder);
 
-        container.addEventListener('click', function() {
-            //console.log('test this out')
-        });
-
-        this.elementArray.push({
+        var elementObject = {
             'input': element,
             'container': container,
-            'placeholder': element.placeholder
-        });
+            'placeholder': placeholder,
+            'placeholderName': element.placeholder
+        };
+
+        if (elementObject.input.value.length != 0) {
+            SlickInput.animateFocus(elementObject);
+        }
 
         element.removeAttribute('placeholder');
+        SlickInput.eventListeners(elementObject);
+        SlickInput.completed(elementObject);
+    };
 
-        this.animateIn(this.elementArray[this.elementArray.length-1]);
+    static animateFocus(elementObject) {
+        Velocity(elementObject.placeholder, 'stop');
+        Velocity(elementObject.placeholder, {
+            paddingTop: 0,
+            fontSize: '10px',
+            top: '-2px'
+        });
+    };
+
+    static animateBlur(elementObject) {
+        Velocity(elementObject.placeholder, 'stop');
+        Velocity(elementObject.placeholder, {
+            paddingTop: '12px',
+            fontSize: '14px',
+            top: '0'
+        });
     }
 
-    animateIn(elementObject) {
-        elementObject.container.style.opacity = 1;
+    static eventListeners(elementObject) {
+        elementObject.input.addEventListener('focus', function() {
+            SlickInput.animateFocus(elementObject);
+        });
+        elementObject.input.addEventListener('blur', function() {
+            if (elementObject.input.value.length == 0) {
+                SlickInput.animateBlur(elementObject);
+            }
+        })
+    };
 
-        Velocity(elementObject.container, {
-            width: 0
-        }, {
-            duration: 0
-        })
-        Velocity(elementObject.container, {
-            width: '100%'
-        }, {
-            duration: this.defaults.duration
-        })
+    static completed() {
+        // remove cloak classes
+        var event = new Event('slickComplete');
+        document.dispatchEvent(event);
     }
 
     destroy() {
 
-    }
+    };
+
 }
 
 
 window.onload = function() {
-    var input = new SlickInput('#slick-input', {});
-    var inputById = new SlickInput('.slick-input', {});
+
+    var input = new SlickInput('input', {});
 };
 
 

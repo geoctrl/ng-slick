@@ -1,3 +1,8 @@
+/**
+ * Slick Helper Functions
+ * @type {{debounce: Function, hasClass: Function}}
+ */
+
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -24,7 +29,22 @@ var slickHelpers = {
     hasClass: function hasClass(element, className) {
         return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
     }
-};;
+};
+
+/**
+ * On component init completion,
+ * remove all '.slick-component-hide' classes
+ * similar to angular's ng-cloak class
+ */
+var slickHideListener = function slickHideListener() {
+    var slickHideElements = document.querySelectorAll('.slick-component-cloak');
+    for (var i = 0; i < slickHideElements.length; i++) {
+        slickHideElements[i].classList.remove('slick-component-cloak');
+    }
+    document.removeEventListener('slickComplete', slickHideListener);
+};
+document.addEventListener('slickComplete', slickHideListener);
+;
 'use strict';
 
 /**
@@ -39,19 +59,21 @@ var SlickInput = (function () {
 
         this.target = target;
         this.elements = document.querySelectorAll(target);
-        this.elementArray = [];
         this.options = options || {};
         this.defaults = {
             animate: options.animate || true,
-            duration: options.duration || 800
+            duration: options.duration || 400
         };
 
         for (var i = 0; i < this.elements.length; i++) {
-            this.init(this.elements[i]);
+            SlickInput.init(this.elements[i]);
         }
     }
 
     _createClass(SlickInput, [{
+        key: 'destroy',
+        value: function destroy() {}
+    }], [{
         key: 'init',
         value: function init(element) {
 
@@ -68,45 +90,68 @@ var SlickInput = (function () {
             container.appendChild(element);
             container.appendChild(placeholder);
 
-            container.addEventListener('click', function () {});
-
-            this.elementArray.push({
+            var elementObject = {
                 'input': element,
                 'container': container,
-                'placeholder': element.placeholder
-            });
+                'placeholder': placeholder,
+                'placeholderName': element.placeholder
+            };
+
+            if (elementObject.input.value.length != 0) {
+                SlickInput.animateFocus(elementObject);
+            }
 
             element.removeAttribute('placeholder');
-
-            this.animateIn(this.elementArray[this.elementArray.length - 1]);
+            SlickInput.eventListeners(elementObject);
+            SlickInput.completed(elementObject);
         }
     }, {
-        key: 'animateIn',
-        value: function animateIn(elementObject) {
-            elementObject.container.style.opacity = 1;
-
-            Velocity(elementObject.container, {
-                width: 0
-            }, {
-                duration: 0
-            });
-            Velocity(elementObject.container, {
-                width: '100%'
-            }, {
-                duration: this.defaults.duration
+        key: 'animateFocus',
+        value: function animateFocus(elementObject) {
+            Velocity(elementObject.placeholder, 'stop');
+            Velocity(elementObject.placeholder, {
+                paddingTop: 0,
+                fontSize: '10px',
+                top: '-2px'
             });
         }
     }, {
-        key: 'destroy',
-        value: function destroy() {}
+        key: 'animateBlur',
+        value: function animateBlur(elementObject) {
+            Velocity(elementObject.placeholder, 'stop');
+            Velocity(elementObject.placeholder, {
+                paddingTop: '12px',
+                fontSize: '14px',
+                top: '0'
+            });
+        }
+    }, {
+        key: 'eventListeners',
+        value: function eventListeners(elementObject) {
+            elementObject.input.addEventListener('focus', function () {
+                SlickInput.animateFocus(elementObject);
+            });
+            elementObject.input.addEventListener('blur', function () {
+                if (elementObject.input.value.length == 0) {
+                    SlickInput.animateBlur(elementObject);
+                }
+            });
+        }
+    }, {
+        key: 'completed',
+        value: function completed() {
+            // remove cloak classes
+            var event = new Event('slickComplete');
+            document.dispatchEvent(event);
+        }
     }]);
 
     return SlickInput;
 })();
 
 window.onload = function () {
-    var input = new SlickInput('#slick-input', {});
-    var inputById = new SlickInput('.slick-input', {});
+
+    var input = new SlickInput('input', {});
 };
 
 //angular.module('ng-slick-input', [])
@@ -191,5 +236,3 @@ window.onload = function () {
 //            }
 //        }
 //    });
-
-//console.log('test this out')
