@@ -6,11 +6,19 @@
 </head>
 <body class="slick-component-cloak">
 
-<input type="text" placeholder="First Name">
-<input type="text" placeholder="Last Name">
-<input type="email" placeholder="Email">
-<input type="tel" placeholder="Phone Number" value="hey">
+<div style="width: 400px;">
+    <input type="text" placeholder="First Name">
+    <input type="text" placeholder="Last Name">
+    <input type="email" placeholder="Email">
+    <input type="tel" placeholder="Phone Number" value="hey">
+</div>
 
+<script>
+    window.onload = function() {
+
+        var input = new SlickInput('input');
+    };
+</script>
 
 <script src="library/velocity/velocity.js"></script>
 
