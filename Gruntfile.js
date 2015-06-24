@@ -93,14 +93,13 @@ module.exports = function(grunt){
 
     grunt.registerTask('serve', function (target) {
 
-        grunt.registerTask('build', ['copy', 'uglify', 'cssmin', 'usebanner']);
-
         grunt.task.run([
             'connect:livereload',
             'watch:livereload'
         ]);
     });
 
+    grunt.registerTask('build', ['copy', 'uglify', 'cssmin', 'usebanner']);
 
     grunt.registerTask('default', []);
 };
