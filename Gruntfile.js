@@ -3,7 +3,14 @@ module.exports = function(grunt){
     require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 
     grunt.initConfig({
+        appConfig: grunt.file.readJSON('app-config.json') || {},
         pkg: grunt.file.readJSON('package.json'),
+
+        banner: '/* <%= appConfig.info.name %> - version <%= appConfig.info.version %> - ' +
+        '<%= grunt.template.today("dd-mm-yyyy") %>\n' +
+        '<%= appConfig.info.description %>\n' +
+        'Authored by <%= appConfig.info.author.name %> ' +
+        '- <%= appConfig.info.author.handle %> */\n',
 
         babel: {
             dev: {
@@ -36,25 +43,57 @@ module.exports = function(grunt){
             livereload: {
                 options: {
                     open: true,
-                    base: [
-                        ''
-                    ]
+                    base: []
                 }
             }
         },
         concat: {
-            options: {
-                separator: ';\n'
-            },
             dist: {
                 src: ['components/es6/**/*.js'],
                 dest: 'components/compiled.js'
+            }
+        },
+        copy: {
+            js: {
+                src: 'components/compiled.js',
+                dest: 'dist/slick.js'
+            },
+            css: {
+                src: 'sass/slick.css',
+                dest: 'dist/slick.css'
+            }
+        },
+        uglify: {
+            build: {
+                files: {
+                    'dist/slick.min.js': 'dist/slick.js'
+                }
+            }
+        },
+        cssmin: {
+            build: {
+                files: {
+                    'dist/slick.min.css': 'dist/slick.css'
+                }
+            }
+        },
+        usebanner: {
+            build: {
+                options: {
+                    position: 'top',
+                    banner: '<%= banner %>'
+                },
+                files: {
+                    src: 'dist/**/*'
+                }
             }
         }
 
     });
 
     grunt.registerTask('serve', function (target) {
+
+        grunt.registerTask('build', ['copy', 'uglify', 'cssmin', 'usebanner']);
 
         grunt.task.run([
             'connect:livereload',

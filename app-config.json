@@ -1,0 +1,11 @@
+{
+  "info": {
+    "name": "Slick",
+    "version": "0.0.1",
+    "description": "Slick components written in ES6 and transpiled to ES5 with BabelJS.",
+    "author": {
+      "name": "Tony Lefler",
+      "handle": "@geoctrl"
+    }
+  }
+}
