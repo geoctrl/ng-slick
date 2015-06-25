@@ -1,7 +1,7 @@
 {
-  "name": "ng-slick",
-  "version": "0.0.0",
-  "homepage": "https://github.com/geoctrl/ng-slick",
+  "name": "slick",
+  "version": "0.0.1",
+  "homepage": "https://github.com/geoctrl/slick",
   "authors": [
     "Tony <tonylefler@gmail.com>"
   ],
